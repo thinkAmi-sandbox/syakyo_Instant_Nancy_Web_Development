@@ -30,9 +30,28 @@ namespace ToDoNancy
 
                 store.Add(newTodo.id, newTodo);
 
-
                 return Response.AsJson(newTodo)
                     .WithStatusCode(HttpStatusCode.Created);
+            };
+
+            Put["/{id}"] = p =>
+            {
+                // pはDynamicDictionary型で、インテリセンスは効かない
+                if (!store.ContainsKey(p.id)) return HttpStatusCode.NotFound;
+
+                var updatedTodo = this.Bind<Todo>();
+                store[p.id] = updatedTodo;
+
+                return Response.AsJson(updatedTodo);
+            };
+
+            Delete["/{id}/"] = p =>
+            {
+                if (!store.ContainsKey(p.id)) return HttpStatusCode.NotFound;
+
+                store.Remove(p.id);
+
+                return HttpStatusCode.OK;
             };
         }
     }
