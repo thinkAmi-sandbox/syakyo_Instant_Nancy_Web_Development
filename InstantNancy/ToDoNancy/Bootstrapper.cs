@@ -14,7 +14,7 @@ namespace ToDoNancy
         {
             base.ConfigureApplicationContainer(container);
 
-            var mongoDataStore = new MongoDataStore("mongodb://localhost:2700/todos");
+            var mongoDataStore = new MongoDataStore("mongodb://localhost:27017/todos");
             container.Register<IDataStore>(mongoDataStore);
         }
     }
