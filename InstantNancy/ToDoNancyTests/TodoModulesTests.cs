@@ -134,6 +134,20 @@ namespace ToDoNancyTests
             AssertAreSame(aTodo, actualBody[0]);
         }
 
+        [Fact]
+        public void Should_be_able_to_get_posted_todo_as_xml()
+        {
+            var actual = sut.Post("/todos/", with =>
+            {
+                with.XMLBody(aTodo);
+                with.Accept("application/xml");
+            });
+
+            var actualBody = actual.Body.DeserializeXml<Todo[]>();
+
+            Assert.Equal(1, actualBody.Length);
+            Assertions.AreSame(aTodo, actualBody[0]);
+        }
 
 
         //---------------
