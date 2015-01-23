@@ -10,6 +10,7 @@ namespace ToDoNancyTests
     using Nancy;
     using Nancy.Testing;
     using Xunit;
+    using MongoDB.Driver;
     using ToDoNancy;
 
     public class TodoModulesTests
@@ -20,8 +21,14 @@ namespace ToDoNancyTests
 
         public TodoModulesTests()
         {
-            TodoModule.store.Clear();
-            sut = new Browser(new DefaultNancyBootstrapper());
+            var connectionString = "mongodb://localhost:27017/todos";
+            var server = new MongoClient(connectionString).GetServer();
+            var databaseName = MongoUrl.Create(connectionString).DatabaseName;
+            var database = server.GetDatabase(databaseName);
+
+            database.Drop();
+
+            sut = new Browser(new Bootstrapper());
             aTodo = new Todo
             {
                 title = "task 1",

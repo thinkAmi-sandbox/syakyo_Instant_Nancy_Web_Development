@@ -9,6 +9,7 @@ namespace ToDoNancyTests
     using Nancy;
     using Nancy.Testing;
     using Xunit;
+    using ToDoNancy;
 
     public class HomeModuleTests
     {
@@ -16,7 +17,7 @@ namespace ToDoNancyTests
         public void Should_answer_200_on_root_path()
         {
             // テスト対象
-            var sut = new Browser(new DefaultNancyBootstrapper());
+            var sut = new Browser(new Bootstrapper());
 
             // 検証対象
             var actual = sut.Get("/");

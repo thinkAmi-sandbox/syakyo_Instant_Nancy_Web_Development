@@ -12,9 +12,9 @@ namespace ToDoNancy
     {
         public static Dictionary<long, Todo> store = new Dictionary<long, Todo>();
 
-        public TodoModule() : base("todos")
+        public TodoModule(IDataStore todoStore) : base("todos")
         {
-            Get["/"] = _ => Response.AsJson(store.Values);
+            Get["/"] = _ => Response.AsJson(todoStore.GetAll());
 
             Post["/"] = _ =>
             {
@@ -23,33 +23,27 @@ namespace ToDoNancy
 
                 if (newTodo.id == 0)
                 {
-                    newTodo.id = store.Count + 1;
+                    newTodo.id = todoStore.Count + 1;
                 }
 
-                if (store.ContainsKey(newTodo.id)) return HttpStatusCode.NotAcceptable;
-
-                store.Add(newTodo.id, newTodo);
-
+                if (!todoStore.TryAdd(newTodo)) return HttpStatusCode.NotAcceptable;
+                
                 return Response.AsJson(newTodo)
                     .WithStatusCode(HttpStatusCode.Created);
             };
 
             Put["/{id}"] = p =>
             {
-                // pはDynamicDictionary型で、インテリセンスは効かない
-                if (!store.ContainsKey(p.id)) return HttpStatusCode.NotFound;
-
                 var updatedTodo = this.Bind<Todo>();
-                store[p.id] = updatedTodo;
 
+                if (!todoStore.TryUpdate(updatedTodo)) return HttpStatusCode.NotFound;
+                
                 return Response.AsJson(updatedTodo);
             };
 
             Delete["/{id}/"] = p =>
             {
-                if (!store.ContainsKey(p.id)) return HttpStatusCode.NotFound;
-
-                store.Remove(p.id);
+                if (!todoStore.TryRemove(p.id)) return HttpStatusCode.NotFound;
 
                 return HttpStatusCode.OK;
             };
