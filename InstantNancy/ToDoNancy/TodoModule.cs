@@ -14,7 +14,7 @@ namespace ToDoNancy
 
         public TodoModule(IDataStore todoStore) : base("todos")
         {
-            Get["/"] = _ => Response.AsJson(store.Values);
+            Get["/"] = _ => Response.AsJson(todoStore.GetAll());
 
             Post["/"] = _ =>
             {
@@ -34,20 +34,16 @@ namespace ToDoNancy
 
             Put["/{id}"] = p =>
             {
-                // pはDynamicDictionary型で、インテリセンスは効かない
-                if (!store.ContainsKey(p.id)) return HttpStatusCode.NotFound;
-
                 var updatedTodo = this.Bind<Todo>();
-                store[p.id] = updatedTodo;
 
+                if (!todoStore.TryUpdate(updatedTodo)) return HttpStatusCode.NotFound;
+                
                 return Response.AsJson(updatedTodo);
             };
 
             Delete["/{id}/"] = p =>
             {
-                if (!store.ContainsKey(p.id)) return HttpStatusCode.NotFound;
-
-                store.Remove(p.id);
+                if (!todoStore.TryRemove(p.id)) return HttpStatusCode.NotFound;
 
                 return HttpStatusCode.OK;
             };
