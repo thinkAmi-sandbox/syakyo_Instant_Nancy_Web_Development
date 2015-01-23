@@ -23,13 +23,11 @@ namespace ToDoNancy
 
                 if (newTodo.id == 0)
                 {
-                    newTodo.id = store.Count + 1;
+                    newTodo.id = todoStore.Count + 1;
                 }
 
-                if (store.ContainsKey(newTodo.id)) return HttpStatusCode.NotAcceptable;
-
-                store.Add(newTodo.id, newTodo);
-
+                if (!todoStore.TryAdd(newTodo)) return HttpStatusCode.NotAcceptable;
+                
                 return Response.AsJson(newTodo)
                     .WithStatusCode(HttpStatusCode.Created);
             };
