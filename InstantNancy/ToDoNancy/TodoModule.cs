@@ -12,7 +12,7 @@ namespace ToDoNancy
     {
         public static Dictionary<long, Todo> store = new Dictionary<long, Todo>();
 
-        public TodoModule() : base("todos")
+        public TodoModule(IDataStore todoStore) : base("todos")
         {
             Get["/"] = _ => Response.AsJson(store.Values);
 
