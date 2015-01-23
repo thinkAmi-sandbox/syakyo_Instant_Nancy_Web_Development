@@ -117,6 +117,26 @@ namespace ToDoNancyTests
             Assert.Empty(actual.Body.DeserializeJson<Todo[]>());
         }
 
+        [Fact]
+        public void Should_be_able_to_get_posted_xml_todo()
+        {
+            var actual = sut.Post("/todos/", with =>
+            {
+                with.XMLBody(aTodo);
+                with.Accept("application/xml");
+            })
+            .Then
+            .Get("todos/", with => with.Accept("application/json"));
+
+            var actualBody = actual.Body.DeserializeJson<Todo[]>();
+
+            Assert.Equal(1, actualBody.Length);
+            AssertAreSame(aTodo, actualBody[0]);
+        }
+
+
+
+        //---------------
 
         private void AssertAreSame(Todo expected, Todo actual)
         {
