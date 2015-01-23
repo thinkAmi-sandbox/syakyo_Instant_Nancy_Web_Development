@@ -14,7 +14,7 @@ namespace ToDoNancy
 
         public TodoModule(IDataStore todoStore) : base("todos")
         {
-            Get["/"] = _ => Response.AsJson(todoStore.GetAll());
+            Get["/"] = _ => todoStore.GetAll();
 
             Post["/"] = _ =>
             {
