@@ -27,8 +27,9 @@ namespace ToDoNancy
                 }
 
                 if (!todoStore.TryAdd(newTodo)) return HttpStatusCode.NotAcceptable;
-                
-                return Response.AsJson(newTodo)
+
+                return Negotiate
+                    .WithModel(newTodo)
                     .WithStatusCode(HttpStatusCode.Created);
             };
 
