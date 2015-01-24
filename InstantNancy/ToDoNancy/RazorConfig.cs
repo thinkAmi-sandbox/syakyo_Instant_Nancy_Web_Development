@@ -11,14 +11,14 @@ namespace ToDoNancy
     {
         public IEnumerable<string> GetAssemblyNames()
         {
-            yield return "HyRes.Models";
-            yield return "HyRes.Website";
+            yield return "ToDoNancy";
+            //yield return "ToDoNancyTests";
         }
 
         public IEnumerable<string> GetDefaultNamespaces()
         {
-            yield return "HyRes.Models";
-            yield return "HyRes.Website.Infrastructure.Helpers";
+            yield return "ToDoNancy";
+            //yield return "ToDoNancyTests";
         }
 
         public bool AutoIncludeModelNamespace

@@ -17,8 +17,12 @@ namespace ToDoNancy
         {
             Get["/"] = _ => 
                 Negotiate
-                .WithModel(todoStore.GetAll())
-                .WithView("Todos");
+                    // `.WithModel(todoStore.GetAll())`だと、例外発生
+                    // MongoDB.Driver.MongoCursor`1[ToDoNancy.Todo]' のオブジェクトを型 'ToDoNancy.Todo[]' にキャストできません。
+                    // `.WithModel(todoStore.GetAll().ToArray())`でArrayを返すように変更
+                    .WithModel(todoStore.GetAll().ToArray())
+                    //.WithModel(todoStore.GetAll())
+                    .WithView("Todos");
 
             Post["/"] = _ =>
             {
