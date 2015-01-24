@@ -163,7 +163,23 @@ namespace ToDoNancyTests
             Assertions.AreSame(aTodo, actualBody[0]);
         }
 
-        
+        [Fact]
+        public void Should_be_able_to_get_posted_todo_as_protobuf()
+        {
+            var actual = sut.Put("/todos/", with => {
+                var stream = new System.IO.MemoryStream();
+                ProtoBuf.Serializer.Serialize(stream, aTodo);
+                with.Body(stream, "application/x-protobuf");
+                with.Accept("application/xml");
+            })
+            .Then
+            .Get("/todos/", with => with.Accept("application/x-protobuf"));
+
+            var actualBody = ProtoBuf.Serializer.Deserialize<Todo[]>(actual.Body.AsStream());
+
+            Assert.Equal(1, actualBody.Length);
+            Assertions.AreSame(aTodo, actualBody[0]);
+        }
 
 
         //---------------
