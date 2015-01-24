@@ -47,7 +47,7 @@ namespace ToDoNancyTests
         [Fact]
         public void Should_return_empty_list_on_get_when_no_todos_have_been_posted()
         {
-            var actual = sut.Get("/todos");
+            var actual = sut.Get("/todos", with => with.Accept("application/xml"));
 
             Assert.Equal(HttpStatusCode.OK, actual.StatusCode);
 
@@ -77,7 +77,7 @@ namespace ToDoNancyTests
         {
             var actual = sut.Post("/todos/", with => with.JsonBody(aTodo))
                 .Then
-                .Get("/todos/");
+                .Get("/todos/", with => with.Accept("application/xml"));
 
             // JSONフォーマットのテキストを、Todoオブジェクトの配列にデシリアライズ
             var actualBody = actual.Body.DeserializeJson<Todo[]>();
@@ -94,7 +94,7 @@ namespace ToDoNancyTests
                 .Then
                 .Put("/todos/1", with => with.JsonBody(anEditedTodo))
                 .Then
-                .Get("/todos/");
+                .Get("/todos/", with => with.Accept("application/xml"));
 
             var actualBody = actual.Body.DeserializeJson<Todo[]>();
 
@@ -110,7 +110,7 @@ namespace ToDoNancyTests
                 .Then
                 .Delete("/todos/1")
                 .Then
-                .Get("/todos/");
+                .Get("/todos/", with => with.Accept("application/xml"));
 
             Assert.Equal(HttpStatusCode.OK, actual.StatusCode);
 
@@ -148,6 +148,8 @@ namespace ToDoNancyTests
             Assert.Equal(1, actualBody.Length);
             Assertions.AreSame(aTodo, actualBody[0]);
         }
+
+        
 
 
         //---------------
