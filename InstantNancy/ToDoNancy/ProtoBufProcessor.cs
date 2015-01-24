@@ -39,6 +39,7 @@ namespace ToDoNancy
 
         public IEnumerable<Tuple<string, MediaRange>> ExtensionMappings
         {
+            // MediaRange.FromString(string)は古い形式です： Please use the constructor
             get { return new[] { new Tuple<string, MediaRange>(".protobuf", new MediaRange("application/x-protobuf")) }; }
             //get { return new[] { new Tuple<string, MediaRange>(".protobuf", MediaRange.FromString("application/x-protobuf")) }; }
         }

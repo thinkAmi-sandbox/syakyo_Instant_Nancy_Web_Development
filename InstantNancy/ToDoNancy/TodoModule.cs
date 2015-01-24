@@ -7,6 +7,7 @@ namespace ToDoNancy
 {
     using Nancy;
     using Nancy.ModelBinding;
+    using Nancy.Responses.Negotiation;
 
     public class TodoModule : NancyModule
     {
