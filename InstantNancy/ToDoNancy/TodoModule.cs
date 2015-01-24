@@ -7,6 +7,7 @@ namespace ToDoNancy
 {
     using Nancy;
     using Nancy.ModelBinding;
+    using Nancy.Responses.Negotiation;
 
     public class TodoModule : NancyModule
     {
@@ -14,7 +15,7 @@ namespace ToDoNancy
 
         public TodoModule(IDataStore todoStore) : base("todos")
         {
-            Get["/"] = _ => Response.AsJson(todoStore.GetAll());
+            Get["/"] = _ => todoStore.GetAll();
 
             Post["/"] = _ =>
             {
@@ -27,8 +28,9 @@ namespace ToDoNancy
                 }
 
                 if (!todoStore.TryAdd(newTodo)) return HttpStatusCode.NotAcceptable;
-                
-                return Response.AsJson(newTodo)
+
+                return Negotiate
+                    .WithModel(newTodo)
                     .WithStatusCode(HttpStatusCode.Created);
             };
 
@@ -37,8 +39,8 @@ namespace ToDoNancy
                 var updatedTodo = this.Bind<Todo>();
 
                 if (!todoStore.TryUpdate(updatedTodo)) return HttpStatusCode.NotFound;
-                
-                return Response.AsJson(updatedTodo);
+
+                return updatedTodo;
             };
 
             Delete["/{id}/"] = p =>
