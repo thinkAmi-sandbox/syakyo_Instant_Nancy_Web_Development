@@ -15,7 +15,10 @@ namespace ToDoNancy
 
         public TodoModule(IDataStore todoStore) : base("todos")
         {
-            Get["/"] = _ => todoStore.GetAll();
+            Get["/"] = _ => 
+                Negotiate
+                .WithModel(todoStore.GetAll())
+                .WithView("Todos");
 
             Post["/"] = _ =>
             {
