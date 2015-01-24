@@ -82,6 +82,7 @@
     <Compile Include="IDataStore.cs" />
     <Compile Include="MongoDataStore.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ProtoBufProcessor.cs" />
     <Compile Include="Todo.cs" />
     <Compile Include="TodoModule.cs" />
   </ItemGroup>
