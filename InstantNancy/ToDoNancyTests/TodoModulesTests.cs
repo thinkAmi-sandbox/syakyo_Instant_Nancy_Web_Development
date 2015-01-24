@@ -126,6 +126,28 @@ namespace ToDoNancyTests
         }
 
         [Fact]
+        public void Should_be_able_to_get_view_with_posted_todo()
+        {
+            var actual = sut.Post("/todos/", with =>
+            {
+                with.JsonBody(aTodo);
+                with.Accept("application/json");
+            })
+            .Then
+            .Get("/todos/", with => with.Accept("text/html"));
+
+            // 'Nancy.Testing.AssertExtensions.ShouldContain(Nancy.Testing.QueryWrapper, string, System.StringComparison)' は古い形式です:
+            // '"This method has a ambiguous name and will be removed. Use AllShouldContain instead."'
+            actual.Body["title"].ShouldContain("Todos");
+            actual.Body["title"].AllShouldContain("Todos");
+            
+            actual.Body["tr#1 td:first-child"]
+                .ShouldExistOnce()
+                .And
+                .ShouldContain(aTodo.title);
+        }
+
+        [Fact]
         public void Should_be_able_to_edit_todo_with_put()
         {
             var actual = sut.Post("/todos/", with => {
