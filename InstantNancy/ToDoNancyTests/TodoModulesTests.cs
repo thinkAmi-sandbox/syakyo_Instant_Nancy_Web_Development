@@ -63,6 +63,20 @@ namespace ToDoNancyTests
         }
 
         [Fact]
+        public void Should_return_created_todo_as_xml_when_a_todo_is_posted()
+        {
+            var actual = sut.Post("/todos/", with =>
+            {
+                with.JsonBody(aTodo);
+                with.Accept("applicatoin/xml");
+            });
+
+            var actualBody = actual.Body.DeserializeXml<Todo>();
+
+            Assertions.AreSame(aTodo, actualBody);
+        }
+
+        [Fact]
         public void Should_not_accept_posting_to_with_duplicate_id()
         {
             var actual = sut.Post("/todos/", with => with.JsonBody(anEditedTodo))
