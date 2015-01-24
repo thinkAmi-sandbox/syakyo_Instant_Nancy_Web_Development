@@ -38,8 +38,8 @@ namespace ToDoNancy
                 var updatedTodo = this.Bind<Todo>();
 
                 if (!todoStore.TryUpdate(updatedTodo)) return HttpStatusCode.NotFound;
-                
-                return Response.AsJson(updatedTodo);
+
+                return updatedTodo;
             };
 
             Delete["/{id}/"] = p =>
