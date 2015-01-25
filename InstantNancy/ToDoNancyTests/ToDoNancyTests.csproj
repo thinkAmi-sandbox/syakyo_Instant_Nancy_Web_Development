@@ -82,6 +82,7 @@
     <Compile Include="DataStoreTests.cs" />
     <Compile Include="DocumentationTests.cs" />
     <Compile Include="HomeModuleTests.cs" />
+    <Compile Include="KnownDevMachinesOnly.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="TodoModulesTests.cs" />
   </ItemGroup>
