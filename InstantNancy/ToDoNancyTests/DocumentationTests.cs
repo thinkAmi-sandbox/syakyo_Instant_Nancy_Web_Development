@@ -17,7 +17,7 @@ namespace ToDoNancyTests
         public void Should_give_access_to_overview_documentation()
         {
             var sut = new Browser(new Bootstrapper());
-            var actual = sut.Get("/docs/overview.htm", with => with.Accept("text/html"));
+            var actual = sut.Get("/docs/overview.html", with => with.Accept("text/html"));
 
             Assert.Equal(HttpStatusCode.OK, actual.StatusCode);
         }

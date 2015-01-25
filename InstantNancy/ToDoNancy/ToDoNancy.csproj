@@ -109,6 +109,9 @@
     <Content Include="Content\js\app.js">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <Content Include="Docs\overview.html">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="Views\index.htm">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
