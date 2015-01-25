@@ -38,7 +38,8 @@ namespace ToDoNancy
 
                 return Negotiate
                     .WithModel(newTodo)
-                    .WithStatusCode(HttpStatusCode.Created);
+                    .WithStatusCode(HttpStatusCode.Created)
+                    .WithView("Created");
             };
 
             Put["/{id}"] = p =>

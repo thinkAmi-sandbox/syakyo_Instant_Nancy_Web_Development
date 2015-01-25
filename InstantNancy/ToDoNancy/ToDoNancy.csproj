@@ -112,13 +112,18 @@
     <Compile Include="MongoDataStore.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ProtoBufProcessor.cs" />
-    <Compile Include="RazorConfig.cs" />
+    <Compile Include="RazorConfig.cs">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="Todo.cs" />
     <Compile Include="TodoModule.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />
     <Content Include="Views\Todos.cshtml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Views\Created.cshtml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <None Include="Web.Debug.config">

@@ -12,13 +12,11 @@ namespace ToDoNancy
         public IEnumerable<string> GetAssemblyNames()
         {
             yield return "ToDoNancy";
-            //yield return "ToDoNancyTests";
         }
 
         public IEnumerable<string> GetDefaultNamespaces()
         {
             yield return "ToDoNancy";
-            //yield return "ToDoNancyTests";
         }
 
         public bool AutoIncludeModelNamespace
