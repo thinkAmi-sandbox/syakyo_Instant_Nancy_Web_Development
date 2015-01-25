@@ -66,7 +66,7 @@ namespace ToDoNancyTests
             catch{}
             finally
             {
-                Assert.True(TryFindExptedErrorLog(actualLog, "Input string was not in a correct format."));
+                Assert.True(TryFindExptedErrorLog(actualLog, "入力文字列の形式が正しくありません。"));
             }
         }
 
