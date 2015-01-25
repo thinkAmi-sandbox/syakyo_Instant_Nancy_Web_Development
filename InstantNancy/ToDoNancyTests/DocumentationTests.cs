@@ -11,6 +11,7 @@ namespace ToDoNancyTests
     using Xunit;
     using ToDoNancy;
 
+    [RunWith(typeof(KnownDevMachinesOnly))]
     public class DocumentationTests
     {
         [Fact]
