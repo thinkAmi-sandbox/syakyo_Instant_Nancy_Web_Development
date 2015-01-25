@@ -13,6 +13,7 @@ namespace ToDoNancyTests
     using MongoDB.Driver;
     using ToDoNancy;
 
+    [RunWith(typeof(KnownDevMachinesOnly))]
     public class TodoModulesTests
     {
         private Browser sut;
