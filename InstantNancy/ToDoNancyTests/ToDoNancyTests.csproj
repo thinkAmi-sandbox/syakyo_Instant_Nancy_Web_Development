@@ -87,6 +87,7 @@
     <Compile Include="HomeModuleTests.cs" />
     <Compile Include="KnownDevMachinesOnly.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="RequestLoggingTests.cs" />
     <Compile Include="TodoModulesTests.cs" />
   </ItemGroup>
   <ItemGroup>
