@@ -163,7 +163,6 @@ namespace ToDoNancyTests
             AssertAreSame(aTodo, actualBody[0]);
         }
 
-        // Cannot pass
         [Fact]
         public void Should_be_able_to_get_posted_todo_as_xml()
         {
@@ -175,15 +174,13 @@ namespace ToDoNancyTests
             .Then
             .Get("/todos/", with => with.Accept("application/xml"));
 
-            // !! System.InvalidOperationException !!
-            // 追加情報:XML シリアル化を可能にするには、IEnumerable から継承される型は、継承階層のすべてのレベルで Add(System.Object) が実装される必要があります。
-            // MongoDB.Driver.MongoCursor`1[[ToDoNancy.Todo, ToDoNancy, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]] には Add(System.Object) が実装されていません。
             var actualBody = actual.Body.DeserializeXml<Todo[]>();
 
             Assert.Equal(1, actualBody.Length);
             Assertions.AreSame(aTodo, actualBody[0]);
         }
 
+        // Cannnot pass
         [Fact]
         public void Should_be_able_to_get_posted_todo_as_protobuf()
         {
@@ -267,13 +264,27 @@ namespace ToDoNancyTests
 
             // 'Nancy.Testing.AssertExtensions.ShouldContain(Nancy.Testing.QueryWrapper, string, System.StringComparison)' は古い形式です:
             // '"This method has a ambiguous name and will be removed. Use AllShouldContain instead."'
-            actual.Body["title"].ShouldContain("Todos");
+            //actual.Body["title"].ShouldContain("Todos");
             actual.Body["title"].AllShouldContain("Todos");
 
             actual.Body["tr#1 td:first-child"]
                 .ShouldExistOnce()
                 .And
                 .ShouldContain(aTodo.title);
+        }
+
+        [Fact]
+        public void Should_return_201_created_when_a_todo_is_posted_in_form()
+        {
+            var actual = sut.Post("/todos/", with =>
+            {
+                with.FormValue("title", aTodo.title);
+                with.FormValue("order", aTodo.order.ToString());
+                with.FormValue("completed", aTodo.completed.ToString());
+                with.Accept("application/json");
+            });
+
+            Assert.Equal(HttpStatusCode.Created, actual.StatusCode);
         }
 
 
