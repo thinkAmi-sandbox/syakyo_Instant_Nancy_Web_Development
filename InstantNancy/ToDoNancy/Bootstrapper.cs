@@ -10,8 +10,6 @@ namespace ToDoNancy
 
     public class Bootstrapper : DefaultNancyBootstrapper
     {
-        private Nancy.ViewEngines.Razor.RazorViewEngine ensureRazorIsLoaded;
-
         protected override void ConfigureApplicationContainer(Nancy.TinyIoc.TinyIoCContainer container)
         {
             base.ConfigureApplicationContainer(container);
