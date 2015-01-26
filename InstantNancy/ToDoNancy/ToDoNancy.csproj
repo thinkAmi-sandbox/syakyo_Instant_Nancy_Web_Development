@@ -132,6 +132,7 @@
     </Compile>
     <Compile Include="Todo.cs" />
     <Compile Include="TodoModule.cs" />
+    <Compile Include="User.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />
