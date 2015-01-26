@@ -57,6 +57,32 @@ namespace ToDoNancyTests
         }
 
         [Fact]
+        public void ShouldLogMethod_post()
+        {
+            sut.Post("/");
+
+            Assert.True(TryFindExptedInfoLog(actualLog, "POST"));
+        }
+
+        [Fact]
+        public void ShoudLogMethod_put()
+        {
+            sut.Put("/");
+
+            Assert.True(TryFindExptedInfoLog(actualLog, "PUT"));
+        }
+
+        [Theory]
+        [InlineData("/")]
+        [InlineData("/todos/")]
+        public void ShouldNotLogErrorOnSuccessfulRequest(string path)
+        {
+            sut.Get(path);
+
+            Assert.False(TryFindExptedErrorLog(actualLog, ""));
+        }
+
+        [Fact]
         public void ShouldLogErrorOnFailingRequest()
         {
             try{
