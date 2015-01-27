@@ -100,6 +100,7 @@
     <Compile Include="RequestLoggingTests.cs" />
     <Compile Include="TestingAuthenticationModule.cs" />
     <Compile Include="TodoModulesTests.cs" />
+    <Compile Include="UserSpecificTodoTests.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />

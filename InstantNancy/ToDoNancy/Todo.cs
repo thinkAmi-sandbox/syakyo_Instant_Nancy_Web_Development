@@ -7,6 +7,7 @@ namespace ToDoNancy
 {
     public class Todo
     {
+        public string userName { get; set; }
         public long id { get; set; }
         public string title { get; set; }
         public int order { get; set; }
