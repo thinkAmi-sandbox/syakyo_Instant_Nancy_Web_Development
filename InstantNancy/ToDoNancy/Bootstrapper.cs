@@ -27,6 +27,8 @@ namespace ToDoNancy
             LogAllRequests(pipelines);
             LogAllResponseCodes(pipelines);
             LogUnhandledExceptions(pipelines);
+
+            SetCurrentUserWhenLoggedIn(pipelines);
         }
 
         protected override void ConfigureApplicationContainer(Nancy.TinyIoc.TinyIoCContainer container)
@@ -73,6 +75,24 @@ namespace ToDoNancy
                     ctx.Request.Method, ctx.Request.Path), err);
                 return null;
             });
+        }
+
+
+        private static void SetCurrentUserWhenLoggedIn(IPipelines pipelines)
+        {
+            pipelines.BeforeRequest += ctx =>
+            {
+                if (ctx.Request.Cookies.ContainsKey("todoUser"))
+                {
+                    ctx.CurrentUser = new TokenService().GetUserFromToken(
+                        ctx.Request.Cookies["todoUser"]);
+                }
+                else
+                {
+                    ctx.CurrentUser = User.Anonymous;
+                }
+                return null;
+            };
         }
     }
 }
