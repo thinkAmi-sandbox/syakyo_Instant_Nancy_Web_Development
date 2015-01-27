@@ -38,5 +38,18 @@ namespace ToDoNancyTests
             Assert.Contains("todoUser", actual.Cookies.Select(cookie => cookie.Name));
             Assert.Contains(userNameToken, actual.Cookies.Select(cookie => cookie.Value));
         }
+
+        [Fact]
+        public void Should_set_user_identity_when_cookie_is_set()
+        {
+            var expected = "chr_horsdal";
+            var userNameToken = new ToDoNancy.TokenService().GetToken(expected);
+
+            var sut = new Browser(new ToDoNancy.Bootstrapper());
+
+            sut.Get("/testing", with => with.Cookie("todoUser", userNameToken));
+
+            Assert.Equal(expected, TestingAuthenticationModule.actualUser.UserName);
+        }
     }
 }
