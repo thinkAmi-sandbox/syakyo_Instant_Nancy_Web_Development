@@ -28,7 +28,8 @@ namespace ToDoNancy
 
         public IEnumerable<Todo> GetAll()
         {
-            return todos.FindAllAs<Todo>();
+            var fields = typeof(Todo).GetProperties().Select(info => info.Name);
+            return todos.FindAllAs<Todo>().SetFields(fields.ToArray()).ToArray();
         }
 
         public bool TryAdd(Todo todo)
@@ -40,9 +41,9 @@ namespace ToDoNancy
             return true;
         }
 
-        public bool TryRemove(int id)
+        public bool TryRemove(int id, string userName)
         {
-            if (FindById(id) == null)
+            if (FindByIdAndUser(id, userName) == null)
                 return false;
 
             todos.Remove(Query.EQ("_id", id));
@@ -54,9 +55,18 @@ namespace ToDoNancy
             return todos.Find(Query.EQ("_id", id)).FirstOrDefault();
         }
 
-        public bool TryUpdate(Todo todo)
+        private BsonDocument FindByIdAndUser(long id, string userName)
         {
-            if (FindById(todo.id) == null)
+            return todos.Find(
+                    Query.And(
+                        Query.EQ("_id", id),
+                        Query.EQ("userName", userName)))
+                .FirstOrDefault();
+        }
+
+        public bool TryUpdate(Todo todo, string userName)
+        {
+            if (FindByIdAndUser(todo.id, userName) == null)
                 return false;
 
             todos.Save(todo);
