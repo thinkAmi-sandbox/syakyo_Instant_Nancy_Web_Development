@@ -13,8 +13,7 @@ namespace ToDoNancySelfHost
     {
         static void Main(string[] args)
         {
-            TodoModule artificiaReference;
-            var nancyHost = new Nancy.Hosting.Self.NancyHost(new Uri("http://localhost:8080"));
+            var nancyHost = new Nancy.Hosting.Self.NancyHost(new Uri("http://localhost:9876"));
             nancyHost.Start();
 
             Console.ReadKey();
