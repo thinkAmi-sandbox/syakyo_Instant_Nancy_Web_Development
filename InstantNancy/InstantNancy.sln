@@ -11,9 +11,11 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".nuget", ".nuget", "{A1B480
 		.nuget\NuGet.exe = .nuget\NuGet.exe
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ToDoNancyAspNet", "ToDoNancy\ToDoNancyAspNet.csproj", "{A96BB1BB-0F15-4CD0-BEBB-7D853EA19AC9}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ToDoNancyAspNet", "ToDoNancyAspNet\ToDoNancyAspNet.csproj", "{A96BB1BB-0F15-4CD0-BEBB-7D853EA19AC9}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ToDoNancyTests", "ToDoNancyTests\ToDoNancyTests.csproj", "{84757D44-2622-490B-8038-5DA6FA469D04}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ToDoNancy", "ToDoNancy\ToDoNancy.csproj", "{56105640-276D-440C-A680-871AB17BA47F}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -33,6 +35,10 @@ Global
 		{84757D44-2622-490B-8038-5DA6FA469D04}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{84757D44-2622-490B-8038-5DA6FA469D04}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{84757D44-2622-490B-8038-5DA6FA469D04}.Release|Any CPU.Build.0 = Release|Any CPU
+		{56105640-276D-440C-A680-871AB17BA47F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{56105640-276D-440C-A680-871AB17BA47F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{56105640-276D-440C-A680-871AB17BA47F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{56105640-276D-440C-A680-871AB17BA47F}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
