@@ -108,13 +108,13 @@
     <None Include="web.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\ToDoNancy\ToDoNancy.csproj">
-      <Project>{a96bb1bb-0f15-4cd0-bebb-7d853ea19ac9}</Project>
-      <Name>ToDoNancy</Name>
-    </ProjectReference>
+    <Service Include="{82A7F48D-3B50-4B1E-B82E-3ADA8210C358}" />
   </ItemGroup>
   <ItemGroup>
-    <Service Include="{82A7F48D-3B50-4B1E-B82E-3ADA8210C358}" />
+    <ProjectReference Include="..\ToDoNancy\ToDoNancy.csproj">
+      <Project>{56105640-276d-440c-a680-871ab17ba47f}</Project>
+      <Name>ToDoNancy</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="$(SolutionDir)\.nuget\NuGet.targets" Condition="Exists('$(SolutionDir)\.nuget\NuGet.targets')" />
