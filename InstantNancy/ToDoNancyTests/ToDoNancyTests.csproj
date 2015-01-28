@@ -108,9 +108,9 @@
     <None Include="web.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\ToDoNancy\ToDoNancy.csproj">
+    <ProjectReference Include="..\ToDoNancy\ToDoNancyAspNet.csproj">
       <Project>{a96bb1bb-0f15-4cd0-bebb-7d853ea19ac9}</Project>
-      <Name>ToDoNancy</Name>
+      <Name>ToDoNancyAspNet</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
