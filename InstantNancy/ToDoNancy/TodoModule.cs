@@ -32,7 +32,7 @@ namespace ToDoNancy
 
             Get["/asnyc", true] = async (_, __) =>
             {
-                var allTodos = await todoStore.GetAll();
+                var allTodos = await todoStore.GetAllAsync();
 
                 return Negotiate
                     .WithModel(allTodos.Where(todo => todo.userName == Context.CurrentUser.UserName)

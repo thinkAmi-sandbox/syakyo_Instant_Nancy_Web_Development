@@ -8,6 +8,7 @@ namespace ToDoNancy
     using MongoDB.Bson;
     using MongoDB.Driver;
     using MongoDB.Driver.Builders;
+    using System.Threading.Tasks;
 
     public class MongoDataStore : IDataStore
     {
@@ -30,6 +31,14 @@ namespace ToDoNancy
         {
             var fields = typeof(Todo).GetProperties().Select(info => info.Name);
             return todos.FindAllAs<Todo>().SetFields(fields.ToArray()).ToArray();
+        }
+
+        public async Task<IEnumerable<Todo>> GetAllAsync()
+        {
+            var fields = typeof(Todo).GetProperties().Select(info => info.Name);
+            var cursor = new Task<IEnumerable<Todo>>(() => todos.FindAllAs<Todo>().SetFields(fields.ToArray()));
+            cursor.Start();
+            return await cursor;
         }
 
         public bool TryAdd(Todo todo)
