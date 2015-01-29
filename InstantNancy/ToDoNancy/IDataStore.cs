@@ -9,6 +9,7 @@ namespace ToDoNancy
     public interface IDataStore
     {
         IEnumerable<Todo> GetAll();
+        Task<IEnumerable<Todo>> GetAllAsync();
         long Count { get; }
         bool TryAdd(Todo todo);
         bool TryRemove(int id, string userName);

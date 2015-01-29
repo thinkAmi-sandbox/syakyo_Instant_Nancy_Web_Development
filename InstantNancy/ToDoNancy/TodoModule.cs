@@ -30,6 +30,17 @@ namespace ToDoNancy
 
                     .WithView("Todos");
 
+            Get["/asnyc", true] = async (_, __) =>
+            {
+                var allTodos = await todoStore.GetAllAsync();
+
+                return Negotiate
+                    .WithModel(allTodos.Where(todo => todo.userName == Context.CurrentUser.UserName)
+                        .ToArray())
+                    .WithView("Todos");
+            };
+
+
             Post["/"] = _ =>
             {
                 // TodoオブジェクトをPOSTのBodyにバインディング

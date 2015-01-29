@@ -10,7 +10,7 @@ namespace ToDoNancyTests
     using Nancy.Testing;
     using FakeItEasy;
     using Xunit;
-    //using Xunit.Extensions;
+    using Xunit.Extensions;
     using ToDoNancy;
 
 
@@ -24,11 +24,20 @@ namespace ToDoNancyTests
         {
             fakeDataStore = FakeItEasy.A.Fake<IDataStore>();
             sut = new Browser(with =>
+            {
+                with.Module<TodoModule>();
+
+                // ログインしてアクセスできるようにする
+                with.ApplicationStartup((container, pipelines) =>
                 {
-                    with.Dependency(fakeDataStore);
-                    with.Module<TodoModule>();
-                }
-            );
+                    container.Register(fakeDataStore);
+                    pipelines.BeforeRequest += ctx =>
+                    {
+                        ctx.CurrentUser = User.Anonymous;
+                        return null;
+                    };
+                });
+            });
 
             aTodo = new Todo()
             {
@@ -39,13 +48,58 @@ namespace ToDoNancyTests
             };
         }
 
+
         [Xunit.Fact]
         public void Should_store_posted_todos_in_datastore()
         {
             sut.Post("/todos/", with => with.JsonBody(aTodo));
         }
 
+        [Fact]
+        public void Should_not_save_the_same_todo_twice()
+        {
+            sut.Post("/todos/", with => with.JsonBody(aTodo))
+              .Then
+              .Post("/todos/", with => with.JsonBody(aTodo));
 
+            AssertCalledTryAddOnDataStoreWith(aTodo);
+        }
+
+
+        //-------------------
+        // 同期と非同期
+        //-------------------
+
+        // 同期
+        [Fact]
+        public void Should_remove_deleted_todo_from_datastore()
+        {
+            A.CallTo(() => fakeDataStore.GetAll())
+             .Returns(new[] { new Todo { id = 1 }, new Todo { id = 2 } });
+
+            sut.Delete("/todos/1");
+
+            A.CallTo(() => fakeDataStore.TryRemove(1, A<string>._)).MustHaveHappened();
+        }
+
+        // 非同期
+        [Fact]
+        public void Should_remove_deleted_todo_from_datasotre_async()
+        {
+            var returnValue = new Task<IEnumerable<Todo>>(() => 
+                new[] { new Todo{ id = 1}, new Todo{ id = 2 } });
+            returnValue.Start();
+
+            FakeItEasy.A.CallTo(() => fakeDataStore.GetAllAsync())
+                .Returns(returnValue);
+
+            sut.Delete("/todos/1");
+
+            A.CallTo(() => fakeDataStore.TryRemove(1, A<string>._)).MustHaveHappened();
+        }
+
+
+        // -------
         private void AssertCalledTryAddOnDataStoreWith(Todo expected)
         {
             // サンプルコードの場合
